@@ -8,7 +8,6 @@ class App extends Component {
     axios.get('/api/films')
          .then((response) => {
            console.log(response);
-           debugger
          })
   }
   render() {
