@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User 
 from django.urls import reverse #Used to generate URLs by reversing the URL patterns
 
 # Create your models here.
@@ -65,3 +66,21 @@ class Director(models.Model):
         String for representing the Model object.
         """
         return '{0}, {1}'.format(self.last_name,self.first_name)
+
+class Vote(models.Model):
+    """A Vote on a Film"""
+    user = models.ForeignKey(User, related_name='votes', on_delete=models.CASCADE)
+    product = models.ForeignKey(Film, on_delete=models.SET_NULL)
+    score = models.FloatField()
+
+    def __str__(self):
+        return "Vote"
+
+# user = User(
+#     first_name='First',
+#     last_name='Last',
+#     username='user'
+# )
+
+# user.set_password('qwerty')
+# user.save()
