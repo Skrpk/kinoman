@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'recommends',
+    'recommends.storages.djangoorm',
     'api.apps.ApiConfig',
     'catalog.apps.CatalogConfig'
 ]
