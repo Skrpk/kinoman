@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Redirect } from 'react-router-dom';
 import SignUpForm from './SignUpForm';
 import './signUpForm.css';
 
@@ -10,7 +10,12 @@ class SignUpPage extends React.PureComponent {
       userSignUpRequest,
       isUserExists,
       errors,
+      user
     } = this.props;
+
+    if (user.username) {
+      return <Redirect to='/' />
+    }
 
     return (<div className="row">
       <div className="form-wrapper">

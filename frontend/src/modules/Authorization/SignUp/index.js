@@ -5,6 +5,7 @@ import authActions from '../actions';
 
 const mapStateToProps = store => ({
   errors: store.auth.get('errors'),
+  user: store.auth.get('user')
 });
 
 const mapDispatchToProps = dispatch => ({

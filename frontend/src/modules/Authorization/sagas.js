@@ -1,27 +1,24 @@
 import { take, call, put, takeEvery, select } from 'redux-saga/effects';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 import { browserHistory } from 'react-router';
 
-import api from '../api/auth';
-import userApi from '../api/user';
-import constants from '../constants/authConstants';
-import flashConstats from '../constants/FlashMessages'
-import setAuthorizationToken from '../utils/setAuthorizationToken';
-
+import api from '../api';
+import constants from './constants';
+// import flashConstats from '../constants/FlashMessages';
+// import setAuthorizationToken from '../utils/setAuthorizationToken';
+const setAuthorizationToken = () => {}
 function* signUpRequest({ payload }) {
   try {
+    debugger
     const receivedData = yield call(api.signUp, payload);
 
     yield put({
-      type: flashConstats.ADD_FLASH_MESSAGE,
-      message: {
-        type: 'success',
-        text: 'Check your email to finish registration.',
-      },
+      type: constants.SET_SIGNED_UP_USER,
+      payload: receivedData.data,
     });
 
-    console.log(2);
-    browserHistory.push('/');
+    console.log(receivedData);
+    // browserHistory.push('/');
   } catch (e) {
     yield put({
       type: constants.AUTH_ERROR,
@@ -37,7 +34,7 @@ export function* signUpSaga() {
 function* checkUserExists({ payload }) {
   const auth = yield select(state => state.auth);
   try {
-    yield call(userApi.checkUserExists, payload);
+    yield call(api.checkUserExists, payload);
 
     const newErrorObj = {...auth.get('errors')};
     delete newErrorObj[payload.field];
@@ -66,7 +63,8 @@ function* signInRequest({ data }) {
     setAuthorizationToken(token);
     yield put({
       type: constants.SET_SIGNED_UP_USER,
-      payload: jwtDecode(token),
+      // payload: jwtDecode(token),
+      payload: token,
     });
   } catch (e) {
     yield put({
