@@ -18,3 +18,8 @@
   color: #333;
   background-color: transparent;
 }
+
+.logout-button:focus {
+  border: none;
+  outline: none;
+}

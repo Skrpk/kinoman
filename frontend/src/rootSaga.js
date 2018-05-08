@@ -5,11 +5,13 @@ import {
   checkUserExistsSaga,
   signInRequestSaga
 } from './modules/Authorization/sagas';
+import { changePasswordSaga } from './modules/Profile/sagas';
 
 export default function* rootSaga() {
   yield all([
     fork(signUpSaga),
     fork(checkUserExistsSaga),
-    fork(signInRequestSaga)
+    fork(signInRequestSaga),
+    fork(changePasswordSaga)
   ]);
 }

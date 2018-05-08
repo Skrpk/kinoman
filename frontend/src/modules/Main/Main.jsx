@@ -7,6 +7,8 @@ import SignInPage from '../Authorization/SignIn';
 import SignUpPage from '../Authorization/SignUp';
 import authActions from '../Authorization/actions';
 import Home from '../Home/Home';
+import Profile from '../Profile';
+import authHOC from '../../common/HOCs/authHOC';
 
 class Main extends React.Component {
   componentDidMount() {
@@ -22,6 +24,7 @@ class Main extends React.Component {
           <Route exact path="/" component={Home} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
+          <Route path="/profile" component={authHOC(Profile)} />
         </Switch>    
       </main>
     );
