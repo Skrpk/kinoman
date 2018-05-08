@@ -21,6 +21,11 @@ export default(state = initialState, action = {}) => {
       return state
         .set('errors', action.payload);
     }
+    case constants.LOG_OUT: {
+      return state
+        .set('user', {})
+        .set('isAuthenticated', false);
+    }
     default:
       return state;
   }

@@ -3,6 +3,7 @@ const AUTH_ERROR = 'AUTH_ERROR';
 const SET_SIGNED_UP_USER = 'SET_SIGNED_UP_USER';
 const IS_USER_EXISTS = 'IS_USER_EXISTS';
 const SIGN_IN_REQUEST = 'SIGN_IN_REQUEST';
+const LOG_OUT = 'LOG_OUT';
 
 export default {
   SIGN_UP_REQUEST,
@@ -10,4 +11,5 @@ export default {
   SET_SIGNED_UP_USER,
   IS_USER_EXISTS,
   SIGN_IN_REQUEST,
+  LOG_OUT,
 };

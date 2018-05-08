@@ -4,3 +4,17 @@
   margin-bottom: 19px;
   height: 5%;
 }
+
+.logout-button {
+  color: #777;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  line-height: 20px;
+  border: none;
+  background-color: transparent;
+}
+
+.logout-button:hover {
+  color: #333;
+  background-color: transparent;
+}

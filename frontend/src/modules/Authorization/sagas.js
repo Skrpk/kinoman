@@ -1,24 +1,16 @@
 import { take, call, put, takeEvery, select } from 'redux-saga/effects';
-// import jwtDecode from 'jwt-decode';
-import { browserHistory } from 'react-router';
+import jwtDecode from 'jwt-decode';
 
 import api from '../api';
 import constants from './constants';
-// import flashConstats from '../constants/FlashMessages';
-// import setAuthorizationToken from '../utils/setAuthorizationToken';
-const setAuthorizationToken = () => {}
+import authActions from './actions';
+
 function* signUpRequest({ payload }) {
   try {
-    debugger
     const receivedData = yield call(api.signUp, payload);
 
-    yield put({
-      type: constants.SET_SIGNED_UP_USER,
-      payload: receivedData.data,
-    });
+    yield put(authActions.setSignedUpUser(receivedData.data.token));
 
-    console.log(receivedData);
-    // browserHistory.push('/');
   } catch (e) {
     yield put({
       type: constants.AUTH_ERROR,
@@ -56,16 +48,12 @@ export function* checkUserExistsSaga() {
 
 function* signInRequest({ data }) {
   try {
-    const user = yield call(api.signIn, data);
+    const user = yield call(api.signIn, {username: data.identifier, password: data.password});
     const { token } = user.data;
 
     localStorage.setItem('jwtToken', token);
-    setAuthorizationToken(token);
-    yield put({
-      type: constants.SET_SIGNED_UP_USER,
-      // payload: jwtDecode(token),
-      payload: token,
-    });
+    yield put(authActions.setSignedUpUser(token));
+    
   } catch (e) {
     yield put({
       type: constants.AUTH_ERROR,

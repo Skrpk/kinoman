@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import SignUpForm from './SignUpForm';
 import './signUpForm.css';
+import isEmpty from 'lodash/isEmpty';
 
 class SignUpPage extends React.PureComponent {
   render() {
@@ -13,7 +14,7 @@ class SignUpPage extends React.PureComponent {
       user
     } = this.props;
 
-    if (user.username) {
+    if (!isEmpty(user)) {
       return <Redirect to='/' />
     }
 

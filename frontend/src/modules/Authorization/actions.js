@@ -1,3 +1,4 @@
+import jwtDecode from 'jwt-decode';
 import constants from './constants';
 
 const signUpRequest = data => ({
@@ -20,9 +21,20 @@ const clearErrorList = () => ({
   payload: {},
 });
 
+const setSignedUpUser = (token) => ({
+  type: constants.SET_SIGNED_UP_USER,
+  payload: jwtDecode(token),
+});
+
+const logOut = () => ({
+  type: constants.LOG_OUT,
+})
+
 export default {
   signUpRequest,
   isUserExists,
   signInRequest,
   clearErrorList,
+  setSignedUpUser,
+  logOut
 };
