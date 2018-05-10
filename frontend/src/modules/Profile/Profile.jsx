@@ -23,13 +23,14 @@ class Profile extends React.PureComponent {
     e.preventDefault();
     if (newPassword === newPasswordCheck) {
       this.props.changePasswordRequest(this.props.user.username, oldPassword, newPassword);
+    } else {
+      this.props.setNewPassComparisonError();
     }
   }
 
   render() {
-    const { user } = this.props;
+    const { user, errors } = this.props;
     const { showChangePassword } = this.state;
-
     return (
       <div>
         <h1>Profile page</h1>
@@ -50,6 +51,7 @@ class Profile extends React.PureComponent {
                 value={this.state.oldPassword}
                 field="oldPassword"
                 type="password"
+                error={errors.oldPass}
               />
               <TextFieldGroup
                 label="Enter new password"
@@ -57,6 +59,7 @@ class Profile extends React.PureComponent {
                 value={this.state.newPassword}
                 field="newPassword"
                 type="password"
+                error={errors.newPass}
               />
               <TextFieldGroup
                 label="Enter new password again"

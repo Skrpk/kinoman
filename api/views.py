@@ -41,13 +41,13 @@ class ChangePassword(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        return Response('hello bitch')
-        print('*********************************************')
-        print(request)
-        print(request.user)
-        print('*********************************************')
         user = get_object_or_404(User, username=request.user)
-        user.set_password(request.POST.get('new_password'))
-        user.save()
+        if user.check_password(request.data['oldPass']):
+            user.set_password(request.data['newPass'])
+            user.save()
+            print('SAVED!!!')
 
-        return Response({'detail': 'Password has been saved.'})
+            return Response({'detail': 'Password has been saved.'})
+        else:
+            print('AAAAAAAAAAAAAAAAAA')
+            return Response({'error': 'Invalid password'}, status=status.HTTP_400_BAD_REQUEST)

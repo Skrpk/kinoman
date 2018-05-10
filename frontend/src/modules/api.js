@@ -11,9 +11,9 @@ const signIn = data =>
 
 const changePassword = data => {
   const authToken = localStorage.getItem('jwtToken');
-  // axios.defaults.headers.common['Authorization'] = `JWT ${authToken}`;
+  axios.defaults.headers.common['Authorization'] = `JWT ${authToken}`;
   return axios.post(
-    'http://localhost:8000/api/change_password',
+    '/api/change_password',
     data,
     {
       headers: {

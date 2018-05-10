@@ -25,7 +25,7 @@ class Main extends React.Component {
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
           <Route path="/profile" component={authHOC(Profile)} />
-        </Switch>    
+        </Switch>
       </main>
     );
   }
