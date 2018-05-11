@@ -6,7 +6,10 @@ import {
   signInRequestSaga
 } from './modules/Authorization/sagas';
 import { changePasswordSaga } from './modules/Profile/sagas';
-import { getGenresSaga } from './modules/Home/sagas';
+import {
+  getGenresSaga,
+  getMoviesSaga
+} from './modules/Home/sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -14,6 +17,7 @@ export default function* rootSaga() {
     fork(checkUserExistsSaga),
     fork(signInRequestSaga),
     fork(changePasswordSaga),
-    fork(getGenresSaga)
+    fork(getGenresSaga),
+    fork(getMoviesSaga),
   ]);
 }

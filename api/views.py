@@ -13,7 +13,7 @@ jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 class FilmViewSet(viewsets.ReadOnlyModelViewSet):
-   queryset = Film.objects.all()
+   queryset = Film.objects.all()[:10]
    permission_classes = (permissions.AllowAny,)
 
    def get_serializer_class(self):
