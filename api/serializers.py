@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from catalog.models import Film
+from catalog.models import Film, Genre
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 
@@ -10,7 +10,7 @@ class FilmPreviewSerializer(serializers.ModelSerializer):
        fields = [
            'id',
            'title',
-           'director',
+           'genres',
            'summary',
        ]
 
@@ -20,7 +20,7 @@ class FilmDetailSerializer(serializers.ModelSerializer):
        model = Film
        fields = [
            'title',
-           'director',
+           'genres',
            'summary',
        ]
 
@@ -42,3 +42,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password')
+
+class GenresSerializer(serializers.ModelSerializer):
+   class Meta:
+       model = Genre
+       fields = [
+           'name'
+       ]

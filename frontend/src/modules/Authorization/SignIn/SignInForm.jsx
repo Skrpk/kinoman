@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import TextFieldGroup from '../../../common/components/TextFieldGroup';
 import validateInput from '../../../common/validations/SignIn';
+import isEmpty from 'lodash/isEmpty';
 
 export default class SignInForm extends React.Component {
   state = {
@@ -38,7 +39,7 @@ export default class SignInForm extends React.Component {
     return (<div className="bd-example">
       <h1>Sign in!</h1>
       {
-        errors.signin ?
+        !isEmpty(errors.signin) ?
         <div className="alert alert-danger">
           {errors.signin}
         </div> : null

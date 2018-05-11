@@ -24,7 +24,7 @@ class Film(models.Model):
     # Foreign Key used because film can only have one director, but directors can have multiple films
     # Director as a string rather than object because it hasn't been declared yet in the file.
     summary = models.TextField(max_length=1000, help_text='Enter a brief description of the film')
-    genre = models.ManyToManyField(Genre, help_text='Select a genre for this film')
+    genres = models.ManyToManyField(Genre, help_text='Select a genre for this film')
     # ManyToManyField used because genre can contain many films. Films can cover many genres.
     # Genre class has already been defined so we can specify the object above.
     

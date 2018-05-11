@@ -1,5 +1,7 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import TextFieldGroup from '../../common/components/TextFieldGroup';
+import isEmpty from 'lodash/isEmpty';
 
 class Profile extends React.PureComponent {
   state = {
@@ -31,6 +33,11 @@ class Profile extends React.PureComponent {
   render() {
     const { user, errors } = this.props;
     const { showChangePassword } = this.state;
+
+    if (isEmpty(user)) {
+      return <Redirect to='/' />;
+    }
+
     return (
       <div>
         <h1>Profile page</h1>

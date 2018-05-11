@@ -18,8 +18,11 @@ export default(state = initialState, action = {}) => {
         .set('isAuthenticated', true);
     }
     case constants.AUTH_ERROR: {
+      const errors = {
+        signin: action.payload.non_field_errors ? action.payload.non_field_errors[0] : {}
+      }
       return state
-        .set('errors', action.payload);
+        .set('errors', errors);
     }
     case constants.LOG_OUT: {
       return state

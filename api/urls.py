@@ -8,6 +8,7 @@ from .views import *
 
 router = DefaultRouter()
 router.register(r'films', FilmViewSet)
+router.register(r'genres', GenresViewSet)
 
 urlpatterns = router.urls
 urlpatterns += [

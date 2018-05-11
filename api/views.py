@@ -6,7 +6,7 @@ from rest_framework_jwt.settings import api_settings
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .serializers import *
-from catalog.models import Film
+from catalog.models import Film, Genre
 from django.contrib.auth.models import User
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -14,15 +14,23 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 class FilmViewSet(viewsets.ReadOnlyModelViewSet):
    queryset = Film.objects.all()
+   permission_classes = (permissions.AllowAny,)
 
    def get_serializer_class(self):
        if self.action == 'list':
            return FilmPreviewSerializer
        return FilmDetailSerializer
 
+class GenresViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Genre.objects.all()
+    permission_classes = (permissions.AllowAny,)
+
+    def get_serializer_class(self):
+        return GenresSerializer
+
 class UserCreate(APIView):
-    """ 
-    Creates the user. 
+    """
+    Creates the user.
     """
     permission_classes = (permissions.AllowAny,)
     def post(self, request, format='json'):
@@ -49,5 +57,4 @@ class ChangePassword(APIView):
 
             return Response({'detail': 'Password has been saved.'})
         else:
-            print('AAAAAAAAAAAAAAAAAA')
             return Response({'error': 'Invalid password'}, status=status.HTTP_400_BAD_REQUEST)

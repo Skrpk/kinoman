@@ -11,7 +11,6 @@ const signIn = data =>
 
 const changePassword = data => {
   const authToken = localStorage.getItem('jwtToken');
-  axios.defaults.headers.common['Authorization'] = `JWT ${authToken}`;
   return axios.post(
     '/api/change_password',
     data,
@@ -23,9 +22,13 @@ const changePassword = data => {
   );
 }
 
+const getGenres = () =>
+  axios.get('/api/genres');
+
 export default {
   signUp,
   signIn,
   checkUserExists,
-  changePassword
+  changePassword,
+  getGenres
 };

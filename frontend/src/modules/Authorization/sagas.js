@@ -55,6 +55,7 @@ function* signInRequest({ data }) {
     yield put(authActions.setSignedUpUser(token));
     
   } catch (e) {
+    console.log(e.response)
     yield put({
       type: constants.AUTH_ERROR,
       payload: e.response.data,
