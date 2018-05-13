@@ -8,10 +8,10 @@ class FilmPreviewSerializer(serializers.ModelSerializer):
    class Meta:
        model = Film
        fields = [
-           'id',
            'title',
            'genres',
            'summary',
+           'movie_id'
        ]
 
 
@@ -22,6 +22,7 @@ class FilmDetailSerializer(serializers.ModelSerializer):
            'title',
            'genres',
            'summary',
+           'movie_id'
        ]
 
 class UserSerializer(serializers.ModelSerializer):

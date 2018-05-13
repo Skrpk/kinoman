@@ -20,6 +20,7 @@ class Film(models.Model):
     Model representing a film.
     """
     title = models.CharField(max_length=200)
+    movie_id = models.CharField(max_length=8, unique=True, primary_key=True)
     director = models.ForeignKey('Director', on_delete=models.SET_NULL, null=True)
     # Foreign Key used because film can only have one director, but directors can have multiple films
     # Director as a string rather than object because it hasn't been declared yet in the file.
@@ -39,7 +40,7 @@ class Film(models.Model):
         """
         Returns the url to access a detail record for this book.
         """
-        return reverse('book-detail', args=[str(self.id)])
+        return reverse('book-detail', args=[str(self.movie_id)])
 
 class Director(models.Model):
     """

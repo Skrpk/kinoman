@@ -11,7 +11,7 @@ from catalog.models import Film, Genre
 
 
 def create_movie(movie_id, title, genres):
-    movie = Film.objects.get_or_create(id=movie_id)[0]
+    movie = Film.objects.get_or_create(movie_id=movie_id)[0]
 
     title_and_year = title.split(sep="(")
 
