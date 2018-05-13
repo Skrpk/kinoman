@@ -1,5 +1,17 @@
-.movie-presenter {
+.movie-presenter-wrapper {
   display: inline-block;
-  width: 132px;
-  height: 202px;
+  width: 18%;
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+
+.movie-presenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movie-presenter:hover {
+  cursor: pointer;
 }

@@ -8,7 +8,8 @@ import {
 
 const initialState = Map({
   genres: [],
-  movies: []
+  movies: [],
+  moviesCount: 0,
 });
 
 export default(state = initialState, action = {}) => {
@@ -19,7 +20,8 @@ export default(state = initialState, action = {}) => {
     }
     case SET_MOVIES: {
       return state
-        .set('movies', action.payload);
+        .set('movies', action.payload.results)
+        .set('moviesCount', action.payload.count);
     }
     default:
       return state;

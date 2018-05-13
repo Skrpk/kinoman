@@ -1,17 +1,33 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
 
 import MoviePresenter from '../MoviePresenter/index';
 import './style.css';
 
 class MovieViewer extends React.Component {
   renderMovies = (movieList) =>
-    movieList && movieList.map(movie => <MoviePresenter key={movie.id} name={movie.title} />)
+    movieList && movieList.map(movie => <MoviePresenter key={movie.movie_id} movie={movie} />)
   render() {
-    const { movies } = this.props;
+    const { movies, moviesCount } = this.props;
+
+    const pageCount = Math.round(moviesCount / 12) + 1;
 
     return (
       <div className='movie-viewer-wrapper'>
-        { this.renderMovies(movies) }
+        <div>
+          { this.renderMovies(movies) }
+        </div>
+        <ReactPaginate previousLabel={"previous"}
+                       nextLabel={"next"}
+                       breakLabel={<a href="">...</a>}
+                       breakClassName={"break-me"}
+                       pageCount={pageCount}
+                       marginPagesDisplayed={2}
+                       pageRangeDisplayed={5}
+                       onPageChange={({ selected }) => this.props.getMovies(selected + 1)}
+                       containerClassName={"pagination"}
+                       subContainerClassName={"pages pagination"}
+                       activeClassName={"active"} />
       </div>
     );
   }

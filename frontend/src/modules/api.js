@@ -25,8 +25,8 @@ const changePassword = data => {
 const getGenres = () =>
   axios.get('/api/genres');
 
-const getMovies = () =>
-  axios.get('/api/films');
+const getMovies = (page) =>
+  axios.get(`/api/films/?page=${page}`);
 
 export default {
   signUp,

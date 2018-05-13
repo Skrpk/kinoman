@@ -27,7 +27,7 @@ export function* getGenresSaga() {
 
 function* getMoviesRequest({ payload }) {
   try {
-    const receivedData = yield call(api.getMovies);
+    const receivedData = yield call(api.getMovies, payload);
 
     yield put({
       type: SET_MOVIES,
