@@ -11,12 +11,20 @@ import Profile from '../Profile';
 import FilmDetail from '../FilmDetail';
 import authHOC from '../../common/HOCs/authHOC';
 
+import {
+  getGenres,
+  getMovies
+} from '../Home/actions';
+
 class Main extends React.Component {
   componentDidMount() {
     const token = localStorage.getItem('jwtToken');
     if (token) {
       this.props.setSignedUpUser(token);
     }
+
+    this.props.getGenres();
+    this.props.getMovies(1);
   }
   render() {
     return (
@@ -35,6 +43,8 @@ class Main extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   setSignedUpUser: token => dispatch(authActions.setSignedUpUser(token)),
+  getGenres: () => dispatch(getGenres()),
+  getMovies: (page) => dispatch(getMovies(page)),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(Main));

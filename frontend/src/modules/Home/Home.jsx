@@ -11,8 +11,8 @@ import MovieViewer from './components/MoviesViewer/index';
 
 class HomePage extends React.Component {
   componentDidMount() {
-    this.props.getGenres();
-    this.props.getMovies(1);
+    // this.props.getGenres();
+    // this.props.getMovies(1);
   }
 
   render() {
