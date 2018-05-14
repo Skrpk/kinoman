@@ -10,6 +10,7 @@ import {
   getGenresSaga,
   getMoviesSaga
 } from './modules/Home/sagas';
+import { getMovieDetailsSaga } from './modules/FilmDetail/sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     fork(changePasswordSaga),
     fork(getGenresSaga),
     fork(getMoviesSaga),
+    fork(getMovieDetailsSaga),
   ]);
 }

@@ -8,6 +8,7 @@ import SignUpPage from '../Authorization/SignUp';
 import authActions from '../Authorization/actions';
 import Home from '../Home/Home';
 import Profile from '../Profile';
+import FilmDetail from '../FilmDetail';
 import authHOC from '../../common/HOCs/authHOC';
 
 class Main extends React.Component {
@@ -24,6 +25,7 @@ class Main extends React.Component {
           <Route exact path="/" component={Home} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
+          <Route path="/film-details/:id" component={FilmDetail} />
           <Route path="/profile" component={authHOC(Profile)} />
         </Switch>
       </main>

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 import './style.css';
 import apiKey from '../../../../common/apiKey.js';
@@ -21,10 +22,11 @@ class MoviePresenter extends React.Component {
 
   render() {
     const { imageUrl } = this.state;
+    const { history } = this.props;
 
     return (
       <div className="movie-presenter-wrapper">
-      <div className='movie-presenter'>
+      <div className='movie-presenter' onClick={() => history.push(`/film-details/${this.props.movie.movie_id}`)}>
         <img src={`https://image.tmdb.org/t/p/w500${imageUrl}`} width="195px" height="290px"/>
         <p>{this.props.movie.title}</p>
       </div>
@@ -33,4 +35,4 @@ class MoviePresenter extends React.Component {
   }
 }
 
-export default MoviePresenter;
+export default withRouter(MoviePresenter);
