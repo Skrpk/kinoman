@@ -1,1 +1,5 @@
 **/__pycache__
+requirements.txt
+/api/__pycache__
+/catalog/__pycache__
+/diploma/__pycache__
