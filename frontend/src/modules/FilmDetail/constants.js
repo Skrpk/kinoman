@@ -1,0 +1,2 @@
+export const GET_MOVIE_DATA = 'GET_MOVIE_DATA';
+export const SET_MOVIE_DETAIL = 'SET_MOVIE_DETAIL';
