@@ -9,6 +9,7 @@ from .serializers import *
 from .pagination import GetPageNumberPagination
 from catalog.models import Film, Genre
 from django.contrib.auth.models import User
+import json
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -22,6 +23,17 @@ class FilmViewSet(viewsets.ReadOnlyModelViewSet):
        if self.action == 'list':
            return FilmPreviewSerializer
        return FilmDetailSerializer
+
+class getMoviesByGenre(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, id):
+        movies = Film.objects.filter(genres=id)
+        print('**************************************************')
+        print(type(id))
+        print(movies.values('title'))
+        print('**************************************************')
+        return Response(FilmPreviewSerializer(movies).data)
 
 class GenresViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Genre.objects.all()

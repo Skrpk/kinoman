@@ -14,5 +14,6 @@ urlpatterns = router.urls
 urlpatterns += [
   path('signup', UserCreate.as_view()),
   path('change_password', ChangePassword.as_view()),
-  path('signin', obtain_jwt_token)
+  path('signin', obtain_jwt_token),
+  path('films-by-genre/<id>/', getMoviesByGenre.as_view())
 ]
