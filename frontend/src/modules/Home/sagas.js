@@ -8,6 +8,9 @@ import {
   SET_MOVIES,
   GET_MOVIES_BY_GENRE
 } from './constants';
+import {
+  getGenreId
+} from './selectors';
 
 function* getGenresRequest({ payload }) {
   try {
@@ -26,9 +29,12 @@ export function* getGenresSaga() {
   yield takeEvery(GET_GENRES, getGenresRequest);
 }
 
-function* getMoviesRequest({ payload }) {
+function* getMoviesRequest({ page }) {
   try {
-    const receivedData = yield call(api.getMovies, payload);
+    const genreId = yield select(getGenreId);
+    debugger
+    
+    const receivedData = yield call(api.getMovies, page, genreId);
 
     yield put({
       type: SET_MOVIES,

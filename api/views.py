@@ -16,15 +16,32 @@ import json
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
-class FilmViewSet(viewsets.ReadOnlyModelViewSet):
-   queryset = Film.objects.all()
-   permission_classes = (permissions.AllowAny,)
-   pagination_class = GetPageNumberPagination
+class FilmViewSet(generics.ListAPIView):
+    queryset = Film.objects.all()
+    permission_classes = (permissions.AllowAny,)
+    pagination_class = GetPageNumberPagination
+    serializer_class = FilmPreviewSerializer
 
-   def get_serializer_class(self):
-       if self.action == 'list':
-           return FilmPreviewSerializer
-       return FilmDetailSerializer
+    def get_queryset(self, id):
+        if id:
+            return Film.objects.filter(genres=id)
+        else:
+            return Film.objects.all()
+
+    def list(self, request):
+        genre_id = request.GET.get('genre', None)
+
+        queryset = self.get_queryset(genre_id)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def get(self, request):
+        return self.list(request)
 
 class getMoviesByGenre(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)

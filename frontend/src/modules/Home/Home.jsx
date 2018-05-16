@@ -6,7 +6,8 @@ import Sidebar from './components/Sidebar/index';
 import {
   getGenres,
   getMovies,
-  getMoviesByGenre
+  getMoviesByGenre,
+  setGenre
 } from './actions';
 import MovieViewer from './components/MoviesViewer/index';
 
@@ -16,15 +17,20 @@ class HomePage extends React.Component {
     // this.props.getMovies(1);
   }
 
+  onSidebarClick = (genreId) => {
+    this.props.setGenre(genreId);
+    this.props.getMovies(1, genreId);
+  }
+
   render() {
-    const { genres, movies, moviesCount, getMoviesByGenre } = this.props;
+    const { genres, movies, moviesCount } = this.props;
 
     return (
       <div className='home'>
         <Sidebar
           list={genres}
           title="Genres"
-          onClick={getMoviesByGenre}
+          onClick={this.onSidebarClick}
         />
         <MovieViewer
           movies={movies}
@@ -44,8 +50,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getGenres: () => dispatch(getGenres()),
-  getMovies: (page) => dispatch(getMovies(page)),
+  getMovies: (page, genre) => dispatch(getMovies(page, genre)),
   getMoviesByGenre: (genreId) => dispatch(getMoviesByGenre(genreId)),
+  setGenre: (genreId) => dispatch(setGenre(genreId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

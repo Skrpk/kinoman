@@ -1,0 +1,1 @@
+export const getGenreId = state => state.home.get('currentGenreId')

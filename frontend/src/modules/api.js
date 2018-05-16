@@ -27,8 +27,8 @@ const changePassword = data => {
 const getGenres = () =>
   axios.get('/api/genres');
 
-const getMovies = (page) =>
-  axios.get(`/api/films/?page=${page}`);
+const getMovies = (page, genre) =>
+  axios.get(`http://localhost:8000/api/films/?page=${page}${genre ? `&genre=${genre}` : ''}`);
 
 const getMovieDetail = (movieId) =>
   axios.get(`https://api.themoviedb.org/3/find/tt${movieId}?external_source=imdb_id&api_key=${apiKey}`)

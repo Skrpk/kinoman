@@ -1,5 +1,6 @@
 import os
 import urllib.request
+import json
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'diploma.settings')
 
