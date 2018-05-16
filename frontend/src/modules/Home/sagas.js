@@ -5,7 +5,8 @@ import {
   GET_GENRES,
   SET_GENRES,
   GET_MOVIES,
-  SET_MOVIES
+  SET_MOVIES,
+  GET_MOVIES_BY_GENRE
 } from './constants';
 
 function* getGenresRequest({ payload }) {
@@ -40,4 +41,26 @@ function* getMoviesRequest({ payload }) {
 
 export function* getMoviesSaga() {
   yield takeEvery(GET_MOVIES, getMoviesRequest);
+}
+
+function* getMoviesByGenreRequest({ payload }) {
+  try {
+    const response = yield call(api.getMoviesByGenre, payload);
+    debugger
+    const result = {
+      results: response.data,
+      count: response.data.length
+    };
+
+    yield put({
+      type: SET_MOVIES,
+      payload: result
+    });
+  } catch (error) {
+
+  }
+}
+
+export function* getMovisByGenreSaga() {
+  yield takeEvery(GET_MOVIES_BY_GENRE, getMoviesByGenreRequest);
 }

@@ -11,22 +11,26 @@ from catalog.models import Film, Genre
 
 
 def create_movie(movie_id, title, genres):
-    movie = Film.objects.get_or_create(movie_id=movie_id)[0]
+    URL = 'https://api.themoviedb.org/3/find/tt' + movie_id + '?external_source=imdb_id&api_key=9bb5cdd5f05b8e9f529bebf6fdca9852'
+    response = urllib.request.urlopen(URL)
+    data = json.loads(response.read().decode("utf-8"))
+    if data['movie_results']:
+        movie = Film.objects.get_or_create(movie_id=movie_id)[0]
 
-    title_and_year = title.split(sep="(")
+        title_and_year = title.split(sep="(")
 
-    movie.title = title_and_year[0]
-    movie.year = title_and_year[1][:-1]
+        movie.title = title_and_year[0]
+        movie.year = title_and_year[1][:-1]
 
-    if genres:
-        for genre in genres.split(sep="|"):
-            g = Genre.objects.get_or_create(name=genre)[0]
-            movie.genres.add(g)
-            g.save()
+        if genres:
+            for genre in genres.split(sep="|"):
+                g = Genre.objects.get_or_create(name=genre)[0]
+                movie.genres.add(g)
+                g.save()
 
-    movie.save()
+        movie.save()
 
-    return movie
+        return movie
 
 
 def download_movies():

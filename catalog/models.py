@@ -8,7 +8,6 @@ class Genre(models.Model):
     Model representing a film genre (e.g. Science Fiction, Non Fiction).
     """
     name = models.CharField(max_length=200, help_text="Enter a film genre (e.g. Science Fiction, Drama etc.)")
-    
     def __str__(self):
         """
         String for representing the Model object (in Admin site etc.)
@@ -22,13 +21,9 @@ class Film(models.Model):
     title = models.CharField(max_length=200)
     movie_id = models.CharField(max_length=8, unique=True, primary_key=True)
     director = models.ForeignKey('Director', on_delete=models.SET_NULL, null=True)
-    # Foreign Key used because film can only have one director, but directors can have multiple films
-    # Director as a string rather than object because it hasn't been declared yet in the file.
-    summary = models.TextField(max_length=1000, help_text='Enter a brief description of the film')
-    genres = models.ManyToManyField(Genre, help_text='Select a genre for this film')
-    # ManyToManyField used because genre can contain many films. Films can cover many genres.
-    # Genre class has already been defined so we can specify the object above.
-    
+    year = models.IntegerField(null=True)
+    genres = models.ManyToManyField(Genre)
+
     def __str__(self):
         """
         String for representing the Model object.

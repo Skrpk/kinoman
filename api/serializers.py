@@ -10,7 +10,6 @@ class FilmPreviewSerializer(serializers.ModelSerializer):
        fields = [
            'title',
            'genres',
-           'summary',
            'movie_id'
        ]
 
@@ -21,7 +20,6 @@ class FilmDetailSerializer(serializers.ModelSerializer):
        fields = [
            'title',
            'genres',
-           'summary',
            'movie_id'
        ]
 

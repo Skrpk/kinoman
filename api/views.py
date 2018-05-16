@@ -5,10 +5,12 @@ from rest_framework.authtoken.models import Token
 from rest_framework_jwt.settings import api_settings
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.core import serializers as sz
 from .serializers import *
 from .pagination import GetPageNumberPagination
 from catalog.models import Film, Genre
 from django.contrib.auth.models import User
+from rest_framework import generics
 import json
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -24,16 +26,29 @@ class FilmViewSet(viewsets.ReadOnlyModelViewSet):
            return FilmPreviewSerializer
        return FilmDetailSerializer
 
-class getMoviesByGenre(APIView):
+class getMoviesByGenre(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
+    pagination_class = GetPageNumberPagination
+    serializer_class = FilmPreviewSerializer
+
+    def get_queryset(self, id):
+        return Film.objects.filter(genres=id)
+
+    def list(self, request, id):
+        queryset = self.filter_queryset(self.get_queryset(id))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def get(self, request, id):
-        movies = Film.objects.filter(genres=id)
-        print('**************************************************')
-        print(type(id))
-        print(movies.values('title'))
-        print('**************************************************')
-        return Response(FilmPreviewSerializer(movies).data)
+        return self.list(request, id)
+        # movies = Film.objects.filter(genres=id)
+        # return Response(movies.values())
 
 class GenresViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Genre.objects.all()

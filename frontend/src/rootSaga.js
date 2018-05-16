@@ -8,7 +8,8 @@ import {
 import { changePasswordSaga } from './modules/Profile/sagas';
 import {
   getGenresSaga,
-  getMoviesSaga
+  getMoviesSaga,
+  getMovisByGenreSaga
 } from './modules/Home/sagas';
 import { getMovieDetailsSaga } from './modules/FilmDetail/sagas';
 
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     fork(getGenresSaga),
     fork(getMoviesSaga),
     fork(getMovieDetailsSaga),
+    fork(getMovisByGenreSaga),
   ]);
 }

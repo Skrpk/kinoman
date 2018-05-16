@@ -5,7 +5,13 @@ export default class Sidebar extends React.Component {
   renderList = (list) =>
     list.map(elem =>
       <li className="sidebar-elem" key={Math.random()}>
-        <a className="list-group-item" href="#">{elem.name}</a>
+        <a
+          className="list-group-item"
+          href="#"
+          onClick={() => this.props.onClick(elem.id)}          
+        >
+          {elem.name}
+        </a>
       </li>
     )
 

@@ -36,6 +36,9 @@ const getMovieDetail = (movieId) =>
 const getGenresFromMovieDB = () =>
   axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
 
+  const getMoviesByGenre = (genreId) =>
+  axios.get(`/api/films-by-genre/${genreId}`)
+
 export default {
   signUp,
   signIn,
@@ -44,5 +47,6 @@ export default {
   getGenres,
   getMovies,
   getMovieDetail,
-  getGenresFromMovieDB
+  getGenresFromMovieDB,
+  getMoviesByGenre
 };
