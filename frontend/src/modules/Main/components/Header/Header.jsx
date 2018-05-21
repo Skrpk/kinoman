@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-const Header = ({ isAuthenticated, logoutHandler }) => {
+const Header = ({ isAuthenticated, logoutHandler, onMainPageClick }) => {
   return (
     <nav className="navbar navbar-default">
       <div className="container-fluid">
         <div className="nav-header">
-          <Link to="/" className="navbar-brand">Main page</Link>
+          <Link to="/" className="navbar-brand" onClick={onMainPageClick}>Main page</Link>
 
           <div className="collapse navbar-collapse">
             { isAuthenticated ?

@@ -24,9 +24,9 @@ class FilmViewSet(generics.ListAPIView):
 
     def get_queryset(self, id):
         if id:
-            return Film.objects.filter(genres=id)
+            return Film.objects.filter(genres=id).order_by('-year')
         else:
-            return Film.objects.all()
+            return Film.objects.all().order_by('-year')
 
     def list(self, request):
         genre_id = request.GET.get('genre', None)

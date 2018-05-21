@@ -32,8 +32,6 @@ export function* getGenresSaga() {
 function* getMoviesRequest({ page }) {
   try {
     const genreId = yield select(getGenreId);
-    debugger
-    
     const receivedData = yield call(api.getMovies, page, genreId);
 
     yield put({
@@ -52,7 +50,6 @@ export function* getMoviesSaga() {
 function* getMoviesByGenreRequest({ payload }) {
   try {
     const response = yield call(api.getMoviesByGenre, payload);
-    debugger
     const result = {
       results: response.data,
       count: response.data.length
