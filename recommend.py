@@ -3,6 +3,12 @@ import urllib.request
 import django
 import datetime
 import decimal
+from scipy.sparse import coo_matrix
+from lightfm import LightFM
+from lightfm.evaluation import precision_at_k
+from lightfm.evaluation import auc_score
+import numpy as np
+from lightfm.datasets import fetch_movielens
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'diploma.settings')
 
@@ -12,65 +18,47 @@ django.setup()
 
 from catalog.models import Film, Genre
 
-def download_ratings():
-    URL = 'https://raw.githubusercontent.com/sidooms/MovieTweetings/master/latest/ratings.dat'
-    response = urllib.request.urlopen(URL)
-    data = response.read()
+def func():
+    data = [
+        [2, 5, 3, 0],
+        [1, 0, 4, 5],
+        [3, 4, 5, 2],
+        [1, 2, 3, 4],
+        [5, 5, 1, 1],
+        [3, 2, 3, 5],
+        [2, 3, 1, 4],
+        [1, 1, 3, 5],
+        [5, 5, 5, 1],
+        [4, 3, 3, 2],
+        [4, 5, 1, 2]
+    ]
 
-    print('download finished')
-    return data.decode('utf-8')
+    MATRIX = coo_matrix(data)
 
-def create_movie(movie_id, title, genres):
-    URL = 'https://api.themoviedb.org/3/find/tt' + movie_id + '?external_source=imdb_id&api_key=9bb5cdd5f05b8e9f529bebf6fdca9852'
-    response = urllib.request.urlopen(URL)
-    data = json.loads(response.read().decode("utf-8"))
-    if data['movie_results']:
-        movie = Film.objects.get_or_create(movie_id=movie_id)[0]
+    model = LightFM(learning_rate=0.02, loss='bpr')
+    model.fit(MATRIX, epochs=10)
+    print(model.predict(4, np.int32([0, 1, 2])))
 
-        title_and_year = title.split(sep="(")
+def func1():
+    movielens = fetch_movielens()
+    train = movielens['train']
+    test = movielens['test']
 
-        movie.title = title_and_year[0]
-        movie.year = title_and_year[1][:-1]
+    model = LightFM(learning_rate=0.05, loss='bpr')
+    model.fit(train, epochs=10)
 
-        if genres:
-            for genre in genres.split(sep="|"):
-                g = Genre.objects.get_or_create(name=genre)[0]
-                movie.genres.add(g)
-                g.save()
+    train_precision = precision_at_k(model, train, k=10).mean()
+    test_precision = precision_at_k(model, test, k=10).mean()
 
-        movie.save()
+    train_auc = auc_score(model, train).mean()
+    test_auc = auc_score(model, test).mean()
 
-        return movie
-
-
-def download_movies():
-    URL = 'https://raw.githubusercontent.com/sidooms/MovieTweetings/master/latest/movies.dat'
-    response = urllib.request.urlopen(URL)
-    data = response.read()
-    return data.decode('utf-8')
-
-def delete_db():
-    print('truncate db')
-    Film.objects.all().delete()
-    Genre.objects.all().delete()
-    print('finished truncate db')
-
-def populate():
-
-    movies = download_movies()
-
-    print('movie data downloaded')
-
-    for movie in movies.split(sep="\n"):
-        m = movie.split(sep="::")
-        if len(m) == 3:
-
-            create_movie(m[0], m[1], m[2])
-
-
+    print('Precision: train %.2f, test %.2f.' % (train_precision, test_precision))
+    print('AUC: train %.2f, test %.2f.' % (train_auc, test_auc))
+    print(model.predict(5, np.int32[0]))
 
 if __name__ == '__main__':
     # print("Starting Kinoman Population script...")
     # delete_db()
     # populate()
-    print(download_ratings())
+    func()
