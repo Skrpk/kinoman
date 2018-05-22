@@ -9,6 +9,7 @@ from lightfm.evaluation import precision_at_k
 from lightfm.evaluation import auc_score
 import numpy as np
 from lightfm.datasets import fetch_movielens
+import pickle
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'diploma.settings')
 
@@ -38,7 +39,7 @@ def func():
                 rating_of_user.append(int(rating[0].rating))
             else:
                 rating_of_user.append(0)
-
+        print(rating_of_user[:20])
         interactions_matrix.append(rating_of_user)
 
     interactions_matrix = coo_matrix(interactions_matrix)
@@ -46,6 +47,8 @@ def func():
     model = LightFM(learning_rate=0.02, loss='bpr')
     model.fit(interactions_matrix, epochs=10)
     print(model.predict(np.int32([4, 5, 6]), np.int32([0, 1, 2])))
+
+    pickle.dump(model, open("model.p", "wb"))
     # data = [
     #     [2, 5, 3, 0],
     #     [1, 0, 4, 5],

@@ -22,12 +22,14 @@ def create_rating(user_id, content_id, rating, timestamp):
     return rating
 
 def create_user(user_id):
-    user = User.objects.get_or_create(
+    user, created = User.objects.get_or_create(
         id=user_id, 
         username='user' + str(user_id),
-        email='jlennon' + str(user_id) + '@beatles.com',
-        password='qwertyui'
+        email='jlennon' + str(user_id) + '@beatles.com'
     )
+
+    user.set_password('qwertyui')
+    user.save()
 
 def download_ratings():
     URL = 'https://raw.githubusercontent.com/sidooms/MovieTweetings/master/latest/ratings.dat'
@@ -40,6 +42,7 @@ def download_ratings():
 def delete_db():
     print('truncate db')
     Rating.objects.all().delete()
+    User.objects.all().delete()
     print('finished truncate db')
 
 def populate():

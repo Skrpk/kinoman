@@ -28,9 +28,11 @@ export default class SignInForm extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    if (this.isValid()) {
+    this.props.signInRequest(this.state);
+    
+    /*if (this.isValid()) {
       this.props.signInRequest(this.state);
-    }
+    }*/
   }
 
   render() {

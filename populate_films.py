@@ -56,7 +56,7 @@ def populate():
 
     print('movie data downloaded')
 
-    for (movie, index) in enumerate(movies.split(sep="\n")):
+    for (index, movie) in enumerate(movies.split(sep="\n")):
         m = movie.split(sep="::")
         if len(m) == 3:
 

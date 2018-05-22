@@ -12,6 +12,10 @@ from catalog.models import Film, Genre
 from django.contrib.auth.models import User
 from rest_framework import generics
 import json
+import pickle
+import numpy as np
+
+model = pickle.load(open("model.p", "rb"))
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -42,6 +46,29 @@ class FilmViewSet(generics.ListAPIView):
 
     def get(self, request):
         return self.list(request)
+
+class getRecommedations(generics.ListAPIView):
+    serializer_class = FilmPreviewSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def list(self, request, id):
+        films_count = Film.objects.count()
+        films = Film.objects.all()
+        recommended_films_indexes_array = model.predict(id, np.arange(films_count))
+        qwe = Film.objects.filter(index__in=np.argsort(recommended_films_indexes_array)[:10])
+        rty = self.filter_queryset(qwe)
+        serializer = self.get_serializer(qwe, many=True)
+        return Response(serializer.data)
+        #######################################################
+        recommended_films = films.get_by_indexes(np.argsort(recommended_films_indexes_array)[:10])
+        #######################################################
+        serializer = self.get_serializer(recommended_films)
+        return Response(serializer.data)
+
+
+    def get(self, request, *args, **kwargs):
+        id = kwargs['id'].split(sep="=")[1]
+        return self.list(request, id)
 
 class getMoviesByGenre(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
