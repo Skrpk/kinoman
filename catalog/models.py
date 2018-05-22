@@ -19,8 +19,8 @@ class Film(models.Model):
     Model representing a film.
     """
     title = models.CharField(max_length=200)
+    index=models.IntegerField(null=True)
     movie_id = models.CharField(max_length=8, unique=True, primary_key=True)
-    director = models.ForeignKey('Director', on_delete=models.SET_NULL, null=True)
     year = models.IntegerField(null=True)
     genres = models.ManyToManyField(Genre)
 

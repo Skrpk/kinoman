@@ -3,23 +3,31 @@ import urllib.request
 import django
 import datetime
 import decimal
-from django.contrib.auth.models import User
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'prs_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'diploma.settings')
 
 django.setup()
 
+from django.contrib.auth.models import User
 from api.models import Rating
 
 
 def create_rating(user_id, content_id, rating, timestamp):
 
+    create_user(user_id)
     rating = Rating(user_id=user_id, movie_id=content_id, rating=decimal.Decimal(rating),
                     rating_timestamp=datetime.datetime.fromtimestamp(float(timestamp)))
     rating.save()
 
     return rating
 
+def create_user(user_id):
+    user = User.objects.get_or_create(
+        id=user_id, 
+        username='user' + str(user_id),
+        email='jlennon' + str(user_id) + '@beatles.com',
+        password='qwertyui'
+    )
 
 def download_ratings():
     URL = 'https://raw.githubusercontent.com/sidooms/MovieTweetings/master/latest/ratings.dat'
