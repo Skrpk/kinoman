@@ -12,6 +12,7 @@ import {
   getMovisByGenreSaga
 } from './modules/Home/sagas';
 import { getMovieDetailsSaga } from './modules/FilmDetail/sagas';
+import { getRecommededFilmsSaga } from './modules/Recommendations/sagas';
 
 export default function* rootSaga() {
   yield all([
@@ -23,5 +24,6 @@ export default function* rootSaga() {
     fork(getMoviesSaga),
     fork(getMovieDetailsSaga),
     fork(getMovisByGenreSaga),
+    fork(getRecommededFilmsSaga),
   ]);
 }

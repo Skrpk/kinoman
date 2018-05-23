@@ -29,7 +29,6 @@ class HomePage extends React.Component {
       <div className='home'>
         <Sidebar
           list={genres}
-          title="Genres"
           onClick={this.onSidebarClick}
         />
         <MovieViewer

@@ -9,6 +9,7 @@ import authActions from '../Authorization/actions';
 import Home from '../Home/Home';
 import Profile from '../Profile';
 import FilmDetail from '../FilmDetail';
+import RecommendationsPage from '../Recommendations';
 import authHOC from '../../common/HOCs/authHOC';
 
 import {
@@ -35,6 +36,7 @@ class Main extends React.Component {
           <Route path="/signin" component={SignInPage} />
           <Route path="/film-details/:id" component={FilmDetail} />
           <Route path="/profile" component={authHOC(Profile)} />
+          <Route path="/recommendations" component={authHOC(RecommendationsPage)} />
         </Switch>
       </main>
     );

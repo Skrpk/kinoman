@@ -59,14 +59,14 @@ class getRecommedations(generics.ListAPIView):
         rty = self.filter_queryset(qwe)
         serializer = self.get_serializer(qwe, many=True)
         return Response(serializer.data)
-        #######################################################
-        recommended_films = films.get_by_indexes(np.argsort(recommended_films_indexes_array)[:10])
-        #######################################################
-        serializer = self.get_serializer(recommended_films)
-        return Response(serializer.data)
 
 
     def get(self, request, *args, **kwargs):
+        print('*****************************************')
+        print('*****************************************')
+        print('*****************************************')
+        print('*****************************************')
+        print('*****************************************')
         id = kwargs['id'].split(sep="=")[1]
         return self.list(request, id)
 

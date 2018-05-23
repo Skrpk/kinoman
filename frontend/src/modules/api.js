@@ -24,6 +24,18 @@ const changePassword = data => {
   );
 }
 
+const getRecommendations = (id) => {
+  const authToken = localStorage.getItem('jwtToken');
+  return axios.get(
+    `/api/recommendations/id=${id}`,
+    {
+      headers: {
+        'Authorization': `JWT ${authToken}`
+      }
+    }
+  )
+}
+
 const getGenres = () =>
   axios.get('/api/genres');
 
@@ -48,5 +60,6 @@ export default {
   getMovies,
   getMovieDetail,
   getGenresFromMovieDB,
-  getMoviesByGenre
+  getMoviesByGenre,
+  getRecommendations
 };

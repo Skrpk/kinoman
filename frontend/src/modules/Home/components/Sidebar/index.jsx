@@ -16,11 +16,10 @@ export default class Sidebar extends React.Component {
     )
 
   render() {
-    const { list, title } = this.props;
+    const { list } = this.props;
 
     return (
-      <div className="col-sm-4 col-md-3 sidebar">
-        <h2>{title}</h2>
+      <div className="genres-wrapper">
         <div className="list-group">
           <ul className="sidebar-ul">
             { this.renderList(list) }

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import Main from './modules/Main/Main';
 import Header from './modules/Main/components/Header/Header';
+import Footer from './modules/Main/components/Footer';
 import authActions from './modules/Authorization/actions';
 import { getMovies, setGenre } from './modules/Home/actions';
 
@@ -14,7 +15,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="main-wrapper">
         <Header
           isAuthenticated={this.props.isAuthenticated}
           logoutHandler={this.logOut}
@@ -24,6 +25,7 @@ class App extends Component {
           }}
         />
         <Main />
+        <Footer />
       </div>
     );
   }
@@ -36,6 +38,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   logOut: () => dispatch(authActions.logOut()),
   getMovies: (page) => dispatch(getMovies(page)),
+  setGenre: (id) => dispatch(setGenre(id))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

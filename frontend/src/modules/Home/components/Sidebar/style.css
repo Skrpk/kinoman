@@ -1,5 +1,5 @@
-h2 {
-  margin-top: 0;
+.genres-wrapper {
+  padding-bottom: 20px;
 }
 
 .sidebar {
@@ -8,8 +8,14 @@ h2 {
 
 .sidebar-elem {
   list-style-type: none;
+  width: 16%;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 .sidebar-ul {
   padding: 0;
+  width: 100%;
+  margin-left: .5%;
 }

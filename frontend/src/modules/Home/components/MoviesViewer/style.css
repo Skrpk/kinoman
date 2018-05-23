@@ -1,3 +1,23 @@
 .movie-viewer-wrapper {
-  width: 75%;
+  width: 100%;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.pagination-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.paginatio-block {
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid #bdb8b8;
+  border-radius: 4px;
+}
+
+.pagination {
+  margin: 0;
 }

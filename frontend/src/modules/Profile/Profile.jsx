@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import TextFieldGroup from '../../common/components/TextFieldGroup';
 import isEmpty from 'lodash/isEmpty';
+import './style.css';
 
 class Profile extends React.PureComponent {
   state = {
@@ -39,10 +40,10 @@ class Profile extends React.PureComponent {
     }
 
     return (
-      <div>
+      <div className="profile-wrapper">
         <h1>Profile page</h1>
-        <h5>Username: {user.username}</h5>
-        <h5>Email: {user.email}</h5>
+        <h5><b>Username:</b> {user.username}</h5>
+        <h5><b>Email:</b> {user.email}</h5>
         <button
               className="btn btn-primary"
               onClick={this.toggleChangePasswordFlag}

@@ -18,7 +18,7 @@ class SignUpPage extends React.PureComponent {
       return <Redirect to='/' />
     }
 
-    return (<div className="row">
+    return (<div className="sign-up-wrapper">
       <div className="form-wrapper">
         <SignUpForm
           checkUserExists={isUserExists}

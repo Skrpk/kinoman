@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 
+import './style.css';
 import SignInForm from './SignInForm';
 
 class SignInPage extends React.PureComponent {
@@ -22,7 +23,7 @@ class SignInPage extends React.PureComponent {
     }
 
     return (
-      <div className="row">
+      <div className="sign-in-wrapper">
         <div className="form-wrapper">
           <SignInForm
             signInRequest={signInRequest}

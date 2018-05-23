@@ -12,6 +12,7 @@ const Header = ({ isAuthenticated, logoutHandler, onMainPageClick }) => {
           <div className="collapse navbar-collapse">
             { isAuthenticated ?
               <ul className="nav navbar-nav navbar-right">
+                <li><Link to="/recommendations">Recommendations</Link></li>
                 <li><Link to="/profile">Profile</Link></li>
                 <li>
                   <button
