@@ -15,6 +15,15 @@ class Stars extends React.Component {
     this.setState({ value: elem.target.value})
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.rating) {
+      this.setState({
+        value: nextProps.rating,
+        block: true
+      });
+    }
+  }
+
   onStarClick = () => {
     if (this.state.block) {
       return;
@@ -22,6 +31,14 @@ class Stars extends React.Component {
 
     this.setState({ block: true });
     this.props.onStarClick(this.state.value);
+  }
+
+  onMouseLeave = () => {
+    if (this.state.block) {
+      return;
+    }
+
+    this.setState({ value: 0 });
   }
 
   renderStars = () => {
@@ -41,7 +58,7 @@ class Stars extends React.Component {
           key={i+1}
           value={i+1}
           onMouseOver={this.onHover}
-          onMouseLeave={() => this.setState({ value: 0 })}
+          onMouseLeave={this.onMouseLeave}
           onClick={this.onStarClick}
           className={"star " + className}>
             {i+1}

@@ -28,7 +28,7 @@ class FilmDetail extends React.Component {
   }
 
   render() {
-    const { details } = this.props;
+    const { details, userId } = this.props;
 
     return (
       <div className="wrapper">
@@ -49,9 +49,13 @@ class FilmDetail extends React.Component {
               <p><b>Overview:</b> {details.overview}</p>              
               </div>
           </div>
-          <Stars
-            onStarClick={this.onRate}
-          />          
+          { userId ?
+            <Stars
+              onStarClick={this.onRate}
+              rating={details.rating}
+            /> : null
+          }
+                 
         </div>
       </div>
     );
