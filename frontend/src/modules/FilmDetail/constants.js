@@ -1,2 +1,5 @@
 export const GET_MOVIE_DATA = 'GET_MOVIE_DATA';
+export const GET_MOVIE_RATING = 'GET_MOVIE_RATING';
+export const SET_MOVIE_RATING = 'SET_MOVIE_RATING';
 export const SET_MOVIE_DETAIL = 'SET_MOVIE_DETAIL';
+export const RATE_MOVIE = 'RATE_MOVIE';

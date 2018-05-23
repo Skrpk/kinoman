@@ -10,10 +10,12 @@ from .serializers import *
 from .pagination import GetPageNumberPagination
 from catalog.models import Film, Genre
 from django.contrib.auth.models import User
+from .models import Rating
 from rest_framework import generics
 import json
 import pickle
 import numpy as np
+import datetime
 
 model = pickle.load(open("model.p", "rb"))
 
@@ -55,44 +57,48 @@ class getRecommedations(generics.ListAPIView):
         films_count = Film.objects.count()
         films = Film.objects.all()
         recommended_films_indexes_array = model.predict(id, np.arange(films_count))
-        qwe = Film.objects.filter(index__in=np.argsort(recommended_films_indexes_array)[:10])
-        rty = self.filter_queryset(qwe)
-        serializer = self.get_serializer(qwe, many=True)
+        result = Film.objects.filter(index__in=np.argsort(recommended_films_indexes_array)[:10])
+
+        serializer = self.get_serializer(result, many=True)
         return Response(serializer.data)
 
-
     def get(self, request, *args, **kwargs):
-        print('*****************************************')
-        print('*****************************************')
-        print('*****************************************')
-        print('*****************************************')
-        print('*****************************************')
         id = kwargs['id'].split(sep="=")[1]
         return self.list(request, id)
 
-class getMoviesByGenre(generics.ListAPIView):
-    permission_classes = (permissions.AllowAny,)
-    pagination_class = GetPageNumberPagination
-    serializer_class = FilmPreviewSerializer
+class getRating(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = RatingSerializer
 
-    def get_queryset(self, id):
-        return Film.objects.filter(genres=id)
+    def get(self, request, *args, **kwargs):
+        print('********************************************')
+        print(kwargs['movie_id'], kwargs['user_id'])
 
-    def list(self, request, id):
-        queryset = self.filter_queryset(self.get_queryset(id))
+        print('********************************************')
+        rating = Rating.objects.filter(
+                                    user_id=kwargs['user_id'],
+                                    movie_id=kwargs['movie_id']
+        )
 
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+        if not rating:
+            return Response({'rating': '0'})
+        else:
+            serializer = self.get_serializer(rating[0])
+            return Response(serializer.data)
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+class rateMovie(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
 
-    def get(self, request, id):
-        return self.list(request, id)
-        # movies = Film.objects.filter(genres=id)
-        # return Response(movies.values())
+    def post(self, request):
+        rating = Rating.objects.create(
+            movie_id=request.data['movieId'],
+            user_id=request.data['userId'],
+            rating=request.data['rating'],
+            type='explicit',
+            rating_timestamp=datetime.datetime.now()
+        )
+        return Response('Saved')
+
 
 class GenresViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Genre.objects.all()

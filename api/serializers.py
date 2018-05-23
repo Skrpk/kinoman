@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from catalog.models import Film, Genre
+from .models import Rating
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 
@@ -14,14 +15,12 @@ class FilmPreviewSerializer(serializers.ModelSerializer):
        ]
 
 
-class FilmDetailSerializer(serializers.ModelSerializer):
-   class Meta:
-       model = Film
-       fields = [
-           'title',
-           'genres',
-           'movie_id'
-       ]
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = [
+            'rating'
+        ]
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(

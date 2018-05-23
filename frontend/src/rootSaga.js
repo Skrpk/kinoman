@@ -11,7 +11,11 @@ import {
   getMoviesSaga,
   getMovisByGenreSaga
 } from './modules/Home/sagas';
-import { getMovieDetailsSaga } from './modules/FilmDetail/sagas';
+import {
+  getMovieDetailsSaga,
+  rateMovieSaga,
+  getRatingSaga
+} from './modules/FilmDetail/sagas';
 import { getRecommededFilmsSaga } from './modules/Recommendations/sagas';
 
 export default function* rootSaga() {
@@ -25,5 +29,7 @@ export default function* rootSaga() {
     fork(getMovieDetailsSaga),
     fork(getMovisByGenreSaga),
     fork(getRecommededFilmsSaga),
+    fork(rateMovieSaga),
+    fork(getRatingSaga)
   ]);
 }

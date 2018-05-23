@@ -1,0 +1,15 @@
+.star {
+  list-style-type: none;
+  float: left;
+  background-image: url(../../../../common/img/1-1394.jpg);
+  width: 100px;
+  height: 100px;
+}
+
+.hovered {
+  background-image: url(../../../../common/img/1-1394.jpg);
+}
+
+.unhovered {
+  background-image: url(../../../../common//img/svinya.jpg);
+}

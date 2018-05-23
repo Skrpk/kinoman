@@ -48,8 +48,37 @@ const getMovieDetail = (movieId) =>
 const getGenresFromMovieDB = () =>
   axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
 
-  const getMoviesByGenre = (genreId) =>
+const getMoviesByGenre = (genreId) =>
   axios.get(`/api/films-by-genre/${genreId}`)
+
+const rateMovie = (movieId, rating, userId) => {
+  const authToken = localStorage.getItem('jwtToken');
+  return axios.post(
+    '/api/rate-movie',
+    {
+      movieId,
+      userId,
+      rating
+    },
+    {
+      headers: {
+        'Authorization': `JWT ${authToken}`
+      }
+    }
+  )
+}
+
+const getMovieRating = (movieId, userId) => {
+  const authToken = localStorage.getItem('jwtToken');
+  return axios.get(
+    `/api/get-rating/${movieId}/${userId}`,
+    {
+      headers: {
+        'Authorization': `JWT ${authToken}`
+      }
+    }
+  );
+}
 
 export default {
   signUp,
@@ -61,5 +90,7 @@ export default {
   getMovieDetail,
   getGenresFromMovieDB,
   getMoviesByGenre,
-  getRecommendations
+  getRecommendations,
+  rateMovie,
+  getMovieRating
 };

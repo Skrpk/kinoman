@@ -2,17 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './style.css';
-import { getMovieData } from './actions';
+import {
+  getMovieData,
+  rateMovie,
+  getMovieRating
+} from './actions';
 import isEmpty from 'lodash/isEmpty';
+import Stars from './components/stars';
 
 class FilmDetail extends React.Component {
   componentDidMount() {
+    const { userId, details: { id } } = this.props;
+
     this.props.getMovieData(this.props.match.params.id);
   }
 
   renderGenres() {
     const { genres } = this.props.details;
     return genres.map(genre => genre.name).join(', ');
+  }
+
+  onRate = (value) => {
+    const { userId, details: { id } } = this.props;
+    this.props.rateMovie(id, value, userId);
   }
 
   render() {
@@ -37,6 +49,9 @@ class FilmDetail extends React.Component {
               <p><b>Overview:</b> {details.overview}</p>              
               </div>
           </div>
+          <Stars
+            onStarClick={this.onRate}
+          />          
         </div>
       </div>
     );
@@ -45,10 +60,13 @@ class FilmDetail extends React.Component {
 
 const mapStateToProps = (store) => ({
   details: store.filmDetails.get('details'),
+  userId: store.auth.get('user').user_id
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getMovieData: (movieId) => dispatch(getMovieData(movieId)),
+  rateMovie: (movieId, value, userId) => dispatch(rateMovie(movieId, value, userId)),
+  getMovieRating: (movieId, userId) => dispatch(getMovieRating(movieId, userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilmDetail);
