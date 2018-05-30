@@ -3,4 +3,4 @@ from rest_framework.pagination import (
 )
 
 class GetPageNumberPagination(PageNumberPagination):
-  page_size = 12
+  page_size = 8

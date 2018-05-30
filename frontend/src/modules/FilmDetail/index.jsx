@@ -10,6 +10,12 @@ import {
 import isEmpty from 'lodash/isEmpty';
 import Stars from './components/stars';
 
+
+const comments = [
+  { author: 'vitali skripka', text: 'Awesome, liked it very much!!!', time: '02.03.2016' },
+  { author: 'andiy velychko', text: 'So boring!!!', time: '02.05.2015' },
+];
+
 class FilmDetail extends React.Component {
   componentDidMount() {
     const { userId, details: { id } } = this.props;
@@ -56,6 +62,22 @@ class FilmDetail extends React.Component {
             /> : null
           }
                  
+        </div>
+        <div className="comments">
+          {
+            comments.map((comment, index) => {
+              let classBg = '';
+              if (index % 2 === 0) {
+                classBg = 'grey-bg';
+              }
+              return (
+                <div className={`comment ${classBg}`}>
+                  <p><b className="author">{comment.author}</b> at {comment.time}</p>
+                  <p>{comment.text}</p>
+                </div>
+              );
+            })
+          }
         </div>
       </div>
     );

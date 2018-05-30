@@ -1,11 +1,30 @@
 .wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: 100%;
   background-color: #f8f8f8;
   border-radius: 4px;
   padding: 15px;
+}
+
+.comments {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid grey;  
+  margin-top: 30px;
+  padding-top: 10px;
+}
+
+.grey-bg {
+  background-color: #f1f1f1; 
+}
+
+.comment {
+  margin: 10px 0;
+  padding: 4px;
 }
 
 .wrapper img {
