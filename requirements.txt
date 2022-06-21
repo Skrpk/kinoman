@@ -13,7 +13,7 @@ gensim==3.4.0
 idna==2.6
 jmespath==0.9.3
 lightfm==1.14
-numpy==1.14.3
+numpy==1.22.0
 pandas==0.22.0
 psycopg2==2.7.4
 PyJWT==1.6.1
